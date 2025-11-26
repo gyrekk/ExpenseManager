@@ -22,7 +22,7 @@ public class ExpenseManager {
         return List.copyOf(expenses);
     }
 
-    public List<Expense> getExpensesByCategory(String category) {
+    public static List<Expense> getExpensesByCategory(String category) {
         return expenses.stream()
                 .filter(e -> e.category().equalsIgnoreCase(category))
                 .toList();
