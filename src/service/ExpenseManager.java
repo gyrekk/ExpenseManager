@@ -1,6 +1,7 @@
 package service;
 
 import model.Expense;
+import ui.ExpenseCategory;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -10,21 +11,21 @@ import java.util.List;
 
 public class ExpenseManager {
 
-    private static final List<Expense> expenses = new ArrayList<>();
+    private final List<Expense> expenses = new ArrayList<>();
 
-    public static void addExpense(String description, Double amount, String category, String date) {
+    public void addExpense(String description, Double amount, ExpenseCategory category, String date) {
         Expense expense = new Expense(description, amount, category, LocalDate.parse(date));
         expenses.add(expense);
     }
 
     // Getters
-    public static List<Expense> getAllExpenses() {
+    public List<Expense> getAllExpenses() {
         return List.copyOf(expenses);
     }
 
-    public static List<Expense> getExpensesByCategory(String category) {
+    public List<Expense> getExpensesByCategory(ExpenseCategory category) {
         return expenses.stream()
-                .filter(e -> e.category().equalsIgnoreCase(category))
+                .filter(e -> e.category().equals(category))
                 .toList();
     }
 

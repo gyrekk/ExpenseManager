@@ -1,6 +1,5 @@
 package ui;
 
-import model.Expense;
 import service.ExpenseManager;
 
 import java.util.Scanner;
@@ -45,17 +44,23 @@ public class Menu {
 
     public void showAllExpenses() {
         System.out.println();
-        System.out.println("All Expenses");
-        ExpensePrinter.displayAllTasks(ExpenseManager.getAllExpenses());
+        System.out.println("ALL Expenses");
+        expensePrinter.displayAllTasks(expenseManager.getAllExpenses());
     }
 
     public void showExpensesByCategory() {
-
         System.out.println();
         System.out.print("Enter category name: ");
-        String categoryName = scanner.nextLine();
-        System.out.println(categoryName + " Expenses");
-        ExpensePrinter.displayAllTasks(ExpenseManager.getExpensesByCategory(categoryName));
+        String categoryName = scanner.nextLine().toUpperCase().trim();
+        try {
+            ExpenseCategory selectedCategory = ExpenseCategory.valueOf(categoryName);
+
+            System.out.println(categoryName + " Expenses");
+            expensePrinter.displayAllTasksWithoutCategory(expenseManager.getExpensesByCategory(selectedCategory));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid category name");
+            System.out.println("Available categories: " + java.util.Arrays.toString(ExpenseCategory.values()));
+        }
     }
 
     public void run() {

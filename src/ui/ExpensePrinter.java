@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ExpensePrinter {
 
-    public static void displayAllTasks(List<Expense> expenses) {
+    public void displayAllTasks(List<Expense> expenses) {
         expenses.
             forEach(e -> System.out.println(
                 e.description() + " " +
