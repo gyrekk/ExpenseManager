@@ -3,7 +3,10 @@ package ui;
 import model.Expense;
 import service.ExpenseManager;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,33 +28,100 @@ public class Menu {
         System.out.println("1 - Add New Expense");
         System.out.println("2 - Show All Expenses");
         System.out.println("3 - Show Category Expenses");
-        System.out.println("4 - Show Sorted by Date (Oldest First)");
-        System.out.println("5 - Show Sorted by Amount (Most Expensive First)");
-        System.out.println("6 - Show Total Cost");
         System.out.println("X - Exit");
         System.out.print("Choose an option: ");
     }
 
-//    private void addNewExpense() {
-//
-//        System.out.println("Enter Expense Name:");
-//        String name = scanner.nextLine();
-//        System.out.println("Enter Expense Amount:");
-//        double amount = scanner.nextDouble();
-//        System.out.println("Enter Expense Category:");
-//        String category = scanner.nextLine();
-//        System.out.println("Enter Expense Date:");
-//        String date = scanner.nextLine();
-//
-//    }
+    private String readDescription() {
+        while (true) {
+            System.out.print("Enter expense description: ");
+            String input = scanner.nextLine().trim();
+            if(!input.isEmpty()) {
+                return input;
+            }
+            System.out.print("Description cannot be empty. Try again.\n");
+        }
+    }
+
+    private double readAmount() {
+        while (true) {
+            System.out.print("Enter amount: ");
+            String inputString = scanner.nextLine().trim();
+            try {
+                double amount = Double.parseDouble(inputString);
+                if(amount > 0) {
+                    return amount;
+                }
+                System.out.println("Amount must be a positive number.");
+            } catch (NumberFormatException e) {
+                System.out.println("Amount must be a number.");
+            }
+        }
+    }
+    private ExpenseCategory readCategory() {
+        while (true) {
+            try {
+                System.out.print("Enter expense category: ");
+                return ExpenseCategory.valueOf(scanner.nextLine().toUpperCase().trim());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid category");
+            }
+        }
+    }
+    private LocalDate readDate() {
+        while (true) {
+            try {
+                System.out.print("Enter expense date template[yyyy-mm-dd] (skip if date is today): ");
+                String input = scanner.nextLine().trim();
+                LocalDate date;
+                if(input.isEmpty()) {
+                    date = LocalDate.now();
+                } else {
+                    date = LocalDate.parse(input);
+                }
+                return date;
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date");
+            }
+        }
+    }
+
+    public void addNewExpense() {
+        System.out.println("Adding new Expense");
+
+        String description = readDescription();
+        double amount = readAmount();
+        ExpenseCategory category = readCategory();
+        LocalDate date =  readDate();
+
+        expenseManager.addExpense(description, amount, category, date);
+        System.out.println("New Expense has been added");
+    }
 
     public void showAllExpenses() {
         List<Expense> allExpenses = expenseManager.getAllExpenses();
         expensePrinter.displayExpenses(allExpenses, "ALL");
-        sortList(allExpenses);
+        sortList(allExpenses, "ALL");
+    }
+    public void showCategoryExpenses() {
+        System.out.print("Enter category name: ");
+        String categoryName = scanner.nextLine().toUpperCase().trim();
+
+        try {
+            ExpenseCategory selectedCategory = ExpenseCategory.valueOf(categoryName);
+            List<Expense> categoryExpenses = expenseManager.getExpensesByCategory(selectedCategory);
+
+            expensePrinter.displayAllTasksWithoutCategory(categoryExpenses, categoryName);
+
+            sortList(categoryExpenses, categoryName);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid category name");
+            System.out.println("Available categories: " + Arrays.toString(ExpenseCategory.values()));
+        }
     }
 
-    public void sortList(List<Expense> expenses) {
+    public void sortList(List<Expense> expenses, String categoryName) {
         while (true) {
             System.out.println("Sorting options");
             System.out.println("1 - Newest expenses first");
@@ -69,7 +139,7 @@ public class Menu {
                 case "2" -> sortedExpenses = expenseManager.expensesSortedByOldestDate(expenses);
                 case "3" -> sortedExpenses = expenseManager.expensesSortedByAmountDesc(expenses);
                 case "4" -> sortedExpenses = expenseManager.expensesSortedByAmountAsc(expenses);
-                case "x" -> {
+                case "X" -> {
                     System.out.println("paaa");
                     return;
                 }
@@ -78,24 +148,7 @@ public class Menu {
                     sortedExpenses = expenses;
                 }
             }
-
-            expensePrinter.displayExpenses(sortedExpenses, "ALL");
-
-        }
-    }
-
-    public void showExpensesByCategory() {
-        System.out.println();
-        System.out.print("Enter category name: ");
-        String categoryName = scanner.nextLine().toUpperCase().trim();
-        try {
-            ExpenseCategory selectedCategory = ExpenseCategory.valueOf(categoryName);
-
-            System.out.println(categoryName + " Expenses");
-            expensePrinter.displayAllTasksWithoutCategory(expenseManager.getExpensesByCategory(selectedCategory));
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid category name");
-            System.out.println("Available categories: " + Arrays.toString(ExpenseCategory.values()));
+            expensePrinter.displayExpenses(sortedExpenses, categoryName);
         }
     }
 
@@ -104,9 +157,9 @@ public class Menu {
             showOptions();
             String choice = scanner.nextLine().trim();
             switch (choice) {
-                case "1" -> System.out.println("Add New Expense");
+                case "1" -> addNewExpense();
                 case "2" -> showAllExpenses();
-                case "3" -> showExpensesByCategory();
+                case "3" -> showCategoryExpenses();
                 case "x" -> {
                     System.out.println("paaa");
                     isRunning = false;
@@ -115,7 +168,6 @@ public class Menu {
             }
             System.out.println();
         }
-
     }
 
 

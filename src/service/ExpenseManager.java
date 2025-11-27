@@ -13,8 +13,8 @@ public class ExpenseManager {
 
     private final List<Expense> expenses = new ArrayList<>();
 
-    public void addExpense(String description, Double amount, ExpenseCategory category, String date) {
-        Expense expense = new Expense(description, amount, category, LocalDate.parse(date));
+    public void addExpense(String description, Double amount, ExpenseCategory category, LocalDate date) {
+        Expense expense = new Expense(description, amount, category, date);
         expenses.add(expense);
     }
 

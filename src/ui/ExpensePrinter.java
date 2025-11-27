@@ -18,11 +18,14 @@ public class ExpensePrinter {
         System.out.println();
     }
 
-    public void displayAllTasksWithoutCategory(List<Expense> expenses) {
+    public void displayAllTasksWithoutCategory(List<Expense> expenses, String category) {
+        System.out.println();
+        System.out.println(category + " expenses");
         expenses.
                 forEach(e -> System.out.println(
                         e.description() + " " +
                                 e.amount() + " " +
                                 e.date()));
+        System.out.println();
     }
 }
