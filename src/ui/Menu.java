@@ -6,7 +6,6 @@ import service.ExpenseManager;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -111,7 +110,7 @@ public class Menu {
             ExpenseCategory selectedCategory = ExpenseCategory.valueOf(categoryName);
             List<Expense> categoryExpenses = expenseManager.getExpensesByCategory(selectedCategory);
 
-            expensePrinter.displayAllTasksWithoutCategory(categoryExpenses, categoryName);
+            expensePrinter.displayAllExpensesWithoutCategory(categoryExpenses, categoryName);
 
             sortList(categoryExpenses, categoryName);
 

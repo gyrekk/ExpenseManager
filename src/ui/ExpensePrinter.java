@@ -18,7 +18,7 @@ public class ExpensePrinter {
         System.out.println();
     }
 
-    public void displayAllTasksWithoutCategory(List<Expense> expenses, String category) {
+    public void displayAllExpensesWithoutCategory(List<Expense> expenses, String category) {
         System.out.println();
         System.out.println(category + " expenses");
         expenses.
