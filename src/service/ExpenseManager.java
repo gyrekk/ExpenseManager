@@ -63,35 +63,35 @@ public class ExpenseManager {
 
     // Sorted by date
 
-    public List<Expense> expensesSortedByDateAsc(List<Expense> expenses) {
+    public List<Expense> expensesSortedByNewestDate(List<Expense> expenses) {
         return expenses.stream()
-                .sorted(Comparator.comparing(Expense::date)) // e -> e.date()
+                .sorted(Comparator.comparing(Expense::date).reversed()) // e -> e.date()
                 .toList();
     }
 
-    public List<Expense> expensesSortedByDateDesc(List<Expense> expenses) {
+    public List<Expense> expensesSortedByOldestDate(List<Expense> expenses) {
         return expenses.stream()
-                .sorted(Comparator.comparing(Expense::date).reversed())
+                .sorted(Comparator.comparing(Expense::date))
                 .toList();
     }
 
     public List<Expense> getAllExpensesSortedByDateAsc() {
-        return expensesSortedByDateAsc(expenses);
+        return expensesSortedByNewestDate(expenses);
     }
 
     public List<Expense> getAllExpensesSortedByDateDesc() {
-        return expensesSortedByDateDesc(expenses);
+        return expensesSortedByOldestDate(expenses);
     }
 
     // Sorted by amount
 
-    public List<Expense> expensesSortedByAmountAsc(List<Expense> expenses) {
+    public List<Expense> expensesSortedByAmountAsc(List<Expense> expenses) { // ASC - lowest to highest amount
         return expenses.stream()
                 .sorted(Comparator.comparing(Expense::amount)) // e -> e.date()
                 .toList();
     }
 
-    public List<Expense> expensesSortedByAmountDesc(List<Expense> expenses) {
+    public List<Expense> expensesSortedByAmountDesc(List<Expense> expenses) { // ASC - highest to lowest amount
         return expenses.stream()
                 .sorted(Comparator.comparing(Expense::amount).reversed())
                 .toList();

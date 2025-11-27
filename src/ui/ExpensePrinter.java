@@ -6,13 +6,16 @@ import java.util.List;
 
 public class ExpensePrinter {
 
-    public void displayAllTasks(List<Expense> expenses) {
+    public void displayExpenses(List<Expense> expenses, String category) {
+        System.out.println();
+        System.out.println(category + " expenses");
         expenses.
             forEach(e -> System.out.println(
                 e.description() + " " +
                 e.category() + " " +
                 e.amount() + " " +
                 e.date()));
+        System.out.println();
     }
 
     public void displayAllTasksWithoutCategory(List<Expense> expenses) {
