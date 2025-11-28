@@ -55,6 +55,24 @@ public class ExpenseManager {
                 .toList();
     }
 
+    public List<Expense> getRecentExpenses() {
+        LocalDate today = LocalDate.now();
+        return expenses.stream()
+                .filter(e -> !e.date().isAfter(today))
+                .sorted(Comparator.comparing(Expense::date).reversed())
+                .limit(10)
+                .toList();
+    }
+
+    public List<Expense> getUpcomingExpenses() {
+        LocalDate today = LocalDate.now();
+        return expenses.stream()
+                .filter(e -> e.date().isAfter(today))
+                .sorted(Comparator.comparing(Expense::date))
+                .limit(10)
+                .toList();
+    }
+
     // Total expenses
     public double sumOfExpenses(List<Expense> expenses) {
         return expenses.stream()

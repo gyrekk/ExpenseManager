@@ -36,6 +36,7 @@ void main() {
     expenseManager.addExpense("Kolacja Walentynkowa", 250.00, ExpenseCategory.FOOD, LocalDate.parse("2025-02-14"));
     expenseManager.addExpense("Paliwo Orlen", 320.00, ExpenseCategory.TRANSPORT, LocalDate.parse("2025-02-25"));
     expenseManager.addExpense("Prezent dla mamy", 200.00, ExpenseCategory.GIFTS, LocalDate.parse("2024-10-08"));
+    expenseManager.addExpense("Kręgle ze znajomymi", 100.00, ExpenseCategory.ENTERTAINMENT, LocalDate.parse("2025-11-27"));
 
     Menu menu = new Menu(expenseManager, expenseConsoleView);
     menu.run();

@@ -28,6 +28,8 @@ public class Menu {
         System.out.println("2 - Delete Expense");
         System.out.println("3 - Show All Expenses");
         System.out.println("4 - Show Category Expenses");
+        System.out.println("5 - Show Last Expenses");
+        System.out.println("6 - Show Upcoming Expenses");
         System.out.println("X - Exit");
         System.out.print("Choose an option: ");
     }
@@ -115,6 +117,17 @@ public class Menu {
         expensePrinter.displayExpenses(allExpenses, "ALL");
         sortList(allExpenses, "ALL");
     }
+
+    public void showLastExpenses() {
+        List<Expense> lastExpenses = expenseManager.getRecentExpenses();
+        expensePrinter.displayExpenses(lastExpenses, "LAST");
+    }
+
+    public void showUpcomingExpenses() {
+        List<Expense> upcomingExpenses = expenseManager.getUpcomingExpenses();
+        expensePrinter.displayExpenses(upcomingExpenses, "UPCOMING");
+    }
+
     public void showCategoryExpenses() {
         System.out.print("Enter category name: ");
         String categoryName = scanner.nextLine().toUpperCase().trim();
@@ -172,6 +185,8 @@ public class Menu {
                 case "2" -> deleteExpense();
                 case "3" -> showAllExpenses();
                 case "4" -> showCategoryExpenses();
+                case "5" -> showLastExpenses();
+                case "6" -> showUpcomingExpenses();
                 case "x" -> {
                     System.out.println("Goodbye!");
                     isRunning = false;
