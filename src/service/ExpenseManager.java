@@ -8,6 +8,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class ExpenseManager {
 
@@ -16,6 +17,18 @@ public class ExpenseManager {
     public void addExpense(String description, Double amount, ExpenseCategory category, LocalDate date) {
         Expense expense = new Expense(description, amount, category, date);
         expenses.add(expense);
+    }
+    public Optional<Expense> getExpense(String description) {
+        return expenses.stream()
+                .filter(e -> e.description().equalsIgnoreCase(description))
+                .findFirst();
+    }
+
+    public void deleteExpense(String description) {
+        Optional<Expense> expense = getExpense(description);
+        if (expense.isPresent()) {
+            expenses.remove(expense.get());
+        } else throw new IllegalArgumentException();
     }
 
     // Getters

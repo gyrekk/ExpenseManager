@@ -25,8 +25,9 @@ public class Menu {
     private void showOptions() {
         System.out.println("EXPENSE MANAGER MENU");
         System.out.println("1 - Add New Expense");
-        System.out.println("2 - Show All Expenses");
-        System.out.println("3 - Show Category Expenses");
+        System.out.println("2 - Delete Expense");
+        System.out.println("3 - Show All Expenses");
+        System.out.println("4 - Show Category Expenses");
         System.out.println("X - Exit");
         System.out.print("Choose an option: ");
     }
@@ -97,6 +98,18 @@ public class Menu {
         System.out.println("New Expense has been added");
     }
 
+    public void deleteExpense() {
+        System.out.println("Deleting new Expense");
+
+        String description = readDescription();
+        try {
+            expenseManager.deleteExpense(description);
+            System.out.println("Expense has been deleted");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Expense does not exist");
+        }
+    }
+
     public void showAllExpenses() {
         List<Expense> allExpenses = expenseManager.getAllExpenses();
         expensePrinter.displayExpenses(allExpenses, "ALL");
@@ -127,7 +140,7 @@ public class Menu {
             System.out.println("2 - Oldest expenses first");
             System.out.println("3 - Higher amount expenses first");
             System.out.println("4 - Lower amount expenses first");
-            System.out.println("x - Back to menu");
+            System.out.println("x - Return to menu");
             System.out.print("Choose an option: ");
             String choice = scanner.nextLine().trim().toUpperCase();
 
@@ -139,7 +152,6 @@ public class Menu {
                 case "3" -> sortedExpenses = expenseManager.expensesSortedByAmountDesc(expenses);
                 case "4" -> sortedExpenses = expenseManager.expensesSortedByAmountAsc(expenses);
                 case "X" -> {
-                    System.out.println("paaa");
                     return;
                 }
                 default -> {
@@ -157,10 +169,11 @@ public class Menu {
             String choice = scanner.nextLine().trim();
             switch (choice) {
                 case "1" -> addNewExpense();
-                case "2" -> showAllExpenses();
-                case "3" -> showCategoryExpenses();
+                case "2" -> deleteExpense();
+                case "3" -> showAllExpenses();
+                case "4" -> showCategoryExpenses();
                 case "x" -> {
-                    System.out.println("paaa");
+                    System.out.println("Goodbye!");
                     isRunning = false;
                 }
                 default -> System.out.println("Wrong choice");
