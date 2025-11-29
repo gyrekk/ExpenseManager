@@ -7,7 +7,6 @@ import java.util.List;
 public class ExpensePrinter {
 
     public void displayExpenses(List<Expense> expenses, String category) {
-        System.out.println();
         System.out.println(category + " expenses");
         expenses.
             forEach(e -> System.out.println(
@@ -15,18 +14,15 @@ public class ExpensePrinter {
                 e.category() + " " +
                 e.amount() + " " +
                 e.date()));
-        System.out.println();
     }
 
     public void displayAllExpensesWithoutCategory(List<Expense> expenses, String category) {
-        System.out.println();
         System.out.println(category + " expenses");
         expenses.
                 forEach(e -> System.out.println(
                         e.description() + " " +
                                 e.amount() + " " +
                                 e.date()));
-        System.out.println();
     }
 }
 

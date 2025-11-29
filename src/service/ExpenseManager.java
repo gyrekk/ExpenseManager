@@ -106,14 +106,6 @@ public class ExpenseManager {
                 .toList();
     }
 
-    public List<Expense> getAllExpensesSortedByDateAsc() {
-        return expensesSortedByNewestDate(expenses);
-    }
-
-    public List<Expense> getAllExpensesSortedByDateDesc() {
-        return expensesSortedByOldestDate(expenses);
-    }
-
     // Sorted by amount
 
     public List<Expense> expensesSortedByAmountAsc(List<Expense> expenses) { // ASC - lowest to highest amount
@@ -126,12 +118,5 @@ public class ExpenseManager {
         return expenses.stream()
                 .sorted(Comparator.comparing(Expense::amount).reversed())
                 .toList();
-    }
-
-    public List<Expense> getAllExpensesSortedByAmountAsc() {
-        return expensesSortedByAmountAsc(expenses);
-    }
-    public List<Expense> getAllExpensesSortedByAmountDesc() {
-        return expensesSortedByAmountDesc(expenses);
     }
 }

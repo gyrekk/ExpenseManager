@@ -119,13 +119,17 @@ public class Menu {
     }
 
     public void showLastExpenses() {
+        System.out.println();
         List<Expense> lastExpenses = expenseManager.getRecentExpenses();
         expensePrinter.displayExpenses(lastExpenses, "LAST");
+        System.out.println();
     }
 
     public void showUpcomingExpenses() {
+        System.out.println();
         List<Expense> upcomingExpenses = expenseManager.getUpcomingExpenses();
         expensePrinter.displayExpenses(upcomingExpenses, "UPCOMING");
+        System.out.println();
     }
 
     public void showCategoryExpenses() {
@@ -136,9 +140,11 @@ public class Menu {
             ExpenseCategory selectedCategory = ExpenseCategory.valueOf(categoryName);
             List<Expense> categoryExpenses = expenseManager.getExpensesByCategory(selectedCategory);
 
+            System.out.println();
             expensePrinter.displayAllExpensesWithoutCategory(categoryExpenses, categoryName);
-
+            System.out.println(expenseManager.sumOfExpenses(categoryExpenses));
             sortList(categoryExpenses, categoryName);
+
 
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid category name");
@@ -148,6 +154,7 @@ public class Menu {
 
     public void sortList(List<Expense> expenses, String categoryName) {
         while (true) {
+            System.out.println();
             System.out.println("Sorting options");
             System.out.println("1 - Newest expenses first");
             System.out.println("2 - Oldest expenses first");
@@ -193,7 +200,6 @@ public class Menu {
                 }
                 default -> System.out.println("Wrong choice");
             }
-            System.out.println();
         }
     }
 
